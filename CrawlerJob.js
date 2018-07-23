@@ -1,6 +1,6 @@
 var webscraper = require("act-crawler-slave");
 var query=require("./MysqlPool"); 
-var CrawlerQueue = require('./crawlerQueue');
+var CrawlerQueue = require('./CrawlerQueue');
 var CrawlerStart = require("./CrawlerStart");
 var dataAddSql = 'insert into scraper_result(siteid,content,createTime) VALUES(?,?,now())';
 var taskUpdateSql = 'update scraper_sitemaps set lastCrawlerTime=now() where siteid = ?';
@@ -17,9 +17,10 @@ CrawlerJob.prototype = {
 		var job = this;
 		var sitemap = this.sitemap;
 		var options = this.options;
+		var dataId = this._id;
 		
 		var updateParams = new Array();
-		updateParams[0] = sitemap._id;
+		updateParams[0] = dataId;
 		query(taskUpdateSql, updateParams, function(err,results,fields){  
 			console.log("update mysql sitemap ..."+results);
 		});
@@ -28,7 +29,7 @@ CrawlerJob.prototype = {
 			.then(function (scraped) {
 				console.log("finished task scrape !"+sitemap._id);
 				var insertParams = new Array();
-				insertParams[0] = sitemap._id;
+				insertParams[0] = dataId;
 				insertParams[1] = JSON.stringify(scraped);
 				query(dataAddSql, insertParams, function(err,results,fields){  
 					console.log("save mysql content ..."+results);
