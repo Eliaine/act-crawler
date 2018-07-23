@@ -5,8 +5,8 @@
   "main": "CrawlerServer.js",
   "dependencies": {
     "act-crawler-slave": "git://github.com/Eliaine/act-crawler-slave.git",
-    "_css-selector@0.1.0@css-selector": "git://github.com/Eliaine/css-selector.git",
-    "_puppeteer@1.6.0@puppeteer": "https://github.com/Eliaine/puppeteer.git",
+    "css-selector": "git://github.com/Eliaine/css-selector.git",
+    "puppeteer": "https://github.com/Eliaine/puppeteer.git",
 	"mysql": "^2.16.0",
     "node-schedule": "^1.3.0"
   },
